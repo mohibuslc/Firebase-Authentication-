@@ -19,8 +19,9 @@ function App(){
    
     signInWithPopup(auth, provider)
    .then(res => {
+    const {displayName, photoURL,email}=res.user;
 
-    console.log(res)
+    console.log(displayName, photoURL,email)
     
    })
   }
