@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+
+import { getAuth , signInWithPopup,GoogleAuthProvider } from "firebase/auth";
+
+import './button.css';
+import firebaseApp from './firebaseConfig';
+
+
+const auth = getAuth(firebaseApp)
+
+function App(){  
+
+ 
+  const provider = new GoogleAuthProvider();
+
+  const handleclick =()=>{
+
+   
+    signInWithPopup(auth, provider)
+   .then(res => {
+
+    console.log(res)
+    
+   })
+  }
+ 
+  
+  return (  
+    <div className ="btn">
+     <button  onClick={handleclick}>Sign-Up</button>
+     </div>
   );
+
 }
 
 export default App;
