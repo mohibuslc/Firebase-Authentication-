@@ -6,23 +6,23 @@ import { getAuth , signInWithPopup,GoogleAuthProvider } from "firebase/auth";
 import './button.css';
 import firebaseApp from './firebaseConfig';
 import {useState} from "react";
-
+import { signOut } from "firebase/auth";
 
 const auth = getAuth(firebaseApp)
 
 function App(){  
-
+ 
+const provider = new GoogleAuthProvider();
  const [user , setUser] = useState({
 
 
-   isSinedIn: false,
+   isSignedIn: false,
    name:'',
    email:'',
    photo:''
 
  });
- 
-  const provider = new GoogleAuthProvider();
+
 
   const handleclick =()=>{
 
@@ -51,18 +51,49 @@ function App(){
    })
   }
  
+  const handleSignOut =()=>{
+
+    console.log('Signed Out Click ')
+
+    const auth = getAuth();
+    signOut(auth).then(res => {
+      const SignedOutuser = {
+
+        name : '',
+        email:'',
+        photo:''
+      }
+      setUser(SignedOutuser)
+    }).catch((error) => {
+      // An error happened.
+    });
+
+  }
+  
   
   return (  
     <div className ="btn">
+      { 
+      user.isSignedIn ? <button  onClick={handleSignOut}>Sign-out</button>:
      <button  onClick={handleclick}>Sign-Up</button>
 
+    }
      {
-
-       user.isSignedIn && <p>  Welcome , {user.name}</p>
-
+       
+       user.isSignedIn && <div> <p>  Welcome , {user.name}</p>
+       <p>  Email,{user.email}</p>
+       <img src={user.Photo} alt=""></img>
+       
+        </div>
+       
      }
+    
      </div>
-  );
+
+
+
+
+);
 
 }
 
